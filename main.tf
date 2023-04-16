@@ -1,6 +1,6 @@
 locals {
   labels = {
-    "terraform-module" = "tailscale-exit-node-google-cloud"
+    "terraform-module" = "https://registry.terraform.io/modules/jlucktay/tailscale-exit-node/google"
   }
 }
 

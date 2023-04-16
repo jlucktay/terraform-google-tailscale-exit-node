@@ -7,3 +7,15 @@ resource "tailscale_tailnet_key" "one_time_use" {
 
   tags = []
 }
+
+resource "null_resource" "remove_previous_exit_node" {
+  provisioner "local-exec" {
+    command = format("%s/remove_previous_exit_node.sh", path.module)
+  }
+
+  lifecycle {
+    replace_triggered_by = [
+      google_compute_instance.main
+    ]
+  }
+}

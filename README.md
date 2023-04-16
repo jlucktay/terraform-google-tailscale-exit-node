@@ -2,12 +2,23 @@
 
 Infrastructure for a Tailscale exit node.
 
-- VM running Debian that will join the tailnet at launch and advertise as an exit node
+- VM running Debian that will join the tailnet at launch and advertise as an exit node.
   - If the user generating the auth key is set up as an `autoApprover` in tailnet policy then the exit node will be
-    added without requiring manual approval
-- Dedicated VPC network and subnet, and a firewall rule to allow SSHing into the exit node VM via Identity-Aware Proxy
-- Enablement of the necessary Google Cloud APIs/services
+    added without requiring manual approval.
+- Dedicated VPC network and subnet, and a firewall rule to allow SSHing into the exit node VM via Identity-Aware Proxy.
+- Enablement of the necessary Google Cloud APIs/services.
 
+## Usage
+
+Both the Google Cloud and Tailscale providers will require authentication:
+
+- For Tailscale, it is recommended to
+  [set the `TAILSCALE_API_KEY` environment variable](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs#api_key)
+  with a [valid API access token](https://login.tailscale.com/admin/settings/keys) generated from the admin console.
+  - The shell script executed by `null_resource.remove_previous_exit_node` will also make use of this
+    `TAILSCALE_API_KEY` environment variable.
+- Google Cloud provider authentication is
+  [documented here](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#authentication).
 
 <!-- BEGIN_TF_DOCS -->
 

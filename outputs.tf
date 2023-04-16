@@ -1,0 +1,45 @@
+output "vpc_id" {
+  description = "The ID of the main VPC."
+  value       = google_compute_network.main.id
+  sensitive   = false
+}
+
+output "subnet_id" {
+  description = "The ID of the regional subnet."
+  value       = google_compute_subnetwork.main.id
+  sensitive   = false
+}
+
+output "instance_id" {
+  description = "The ID of the exit node VM."
+  value       = google_compute_instance.main.id
+  sensitive   = false
+}
+
+output "instance_ssh_command" {
+  description = "The command line to run for SSH access into the exit node VM."
+  sensitive   = false
+
+  value = format(
+    "gcloud compute ssh %s --project=%s --tunnel-through-iap --zone=%s",
+    google_compute_instance.main.name,
+    google_compute_instance.main.project,
+    google_compute_instance.main.zone,
+  )
+}
+
+output "tailscale_key_id" {
+  description = "The ID of the Tailscale auth key that the exit node VM joined the tailnet with."
+  value       = tailscale_tailnet_key.one_time_use.id
+  sensitive   = false
+}
+
+output "vm_manager_service_account_id" {
+  description = "The ID of the service account attached to the VM which enables the VM Manager/OS Config service."
+  value       = google_service_account.vm_manager.id
+  sensitive   = false
+}
+
+output "enabled_apis" {
+  value = values(google_project_service.main).*.service
+}

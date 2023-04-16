@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: terraform
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: weekly
+    assignees:
+      - jlucktay
+    open-pull-requests-limit: 3
+    reviewers:
+      - jlucktay

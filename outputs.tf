@@ -28,6 +28,12 @@ output "instance_ssh_command" {
   )
 }
 
+output "instance_public_ip" {
+  description = "The public IP address of the exit node VM."
+  value       = google_compute_instance.main.network_interface[0].access_config[0].nat_ip
+  sensitive   = false
+}
+
 output "tailscale_key_id" {
   description = "The ID of the Tailscale auth key that the exit node VM joined the tailnet with."
   value       = tailscale_tailnet_key.one_time_use.id

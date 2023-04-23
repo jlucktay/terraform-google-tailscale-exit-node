@@ -116,6 +116,10 @@ Description: n/a
 
 Description: The ID of the exit node VM.
 
+### <a name="output_instance_public_ip"></a> [instance\_public\_ip](#output\_instance\_public\_ip)
+
+Description: The public IP address of the exit node VM.
+
 ### <a name="output_instance_ssh_command"></a> [instance\_ssh\_command](#output\_instance\_ssh\_command)
 
 Description: The command line to run for SSH access into the exit node VM.

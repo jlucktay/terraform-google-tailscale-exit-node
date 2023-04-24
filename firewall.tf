@@ -1,5 +1,6 @@
 resource "google_compute_firewall" "main" {
-  name        = "exit-node-firewall"
+  name = "exit-node-firewall"
+
   network     = google_compute_network.main.id
   description = "Allow incoming SSH from Identity-Aware Proxy into resources tagged with 'ssh'."
 
@@ -18,4 +19,10 @@ resource "google_compute_firewall" "main" {
   target_tags = [
     "ssh"
   ]
+
+  lifecycle {
+    replace_triggered_by = [
+      google_compute_network.main
+    ]
+  }
 }

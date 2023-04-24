@@ -4,27 +4,6 @@ locals {
   }
 }
 
-resource "google_compute_network" "main" {
-  name = "exit-node-network"
-
-  description             = "The main VPC for the exit node and its subnet."
-  auto_create_subnetworks = false
-}
-
-resource "google_compute_subnetwork" "main" {
-  name          = "exit-node-subnet"
-  ip_cidr_range = "10.128.0.0/20"
-  network       = google_compute_network.main.id
-
-  description = "Regional subnet of the main VPC for the exit node."
-  purpose     = "PRIVATE"
-  role        = "ACTIVE"
-
-  private_ip_google_access = true
-  region                   = var.region
-  stack_type               = "IPV4_ONLY"
-}
-
 data "google_compute_image" "debian" {
   project = "debian-cloud"
   family  = "debian-11"
@@ -34,11 +13,22 @@ data "google_compute_zones" "region" {
   region = var.region
 }
 
-resource "google_compute_instance" "main" {
-  machine_type = "e2-micro"
+resource "random_integer" "region_selector" {
+  min = 1
+  max = length(data.google_compute_zones.region.names)
 
+  keepers = {
+    # Pick a new region for the exit node each time we regenerate the Tailnet key, which in turns causes the exit node
+    # to be recreated.
+    tail_key = tailscale_tailnet_key.one_time_use.key
+  }
+}
+
+resource "google_compute_instance" "main" {
   name = "exit-node-vm"
-  zone = element(data.google_compute_zones.region.names, 0)
+
+  machine_type = "e2-micro"
+  zone         = element(data.google_compute_zones.region.names, random_integer.region_selector.result)
 
   allow_stopping_for_update = true
   can_ip_forward            = true
@@ -74,8 +64,9 @@ resource "google_compute_instance" "main" {
   network_interface {
     subnetwork = google_compute_subnetwork.main.id
 
-    // Ephemeral public IP
-    access_config {}
+    access_config {
+      nat_ip = google_compute_address.main.address
+    }
   }
 
   service_account {

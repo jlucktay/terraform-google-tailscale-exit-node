@@ -40,6 +40,8 @@ The following providers are used by this module:
 
 - <a name="provider_null"></a> [null](#provider\_null)
 
+- <a name="provider_random"></a> [random](#provider\_random)
+
 - <a name="provider_tailscale"></a> [tailscale](#provider\_tailscale) (~> 0.13)
 
 ## Modules
@@ -50,15 +52,18 @@ No modules.
 
 The following resources are used by this module:
 
+- [google_compute_address.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_address) (resource)
 - [google_compute_firewall.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall) (resource)
 - [google_compute_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance) (resource)
 - [google_compute_network.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) (resource)
+- [google_compute_project_default_network_tier.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_default_network_tier) (resource)
 - [google_compute_project_metadata_item.enable_vm_manager_os_config](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
 - [google_compute_subnetwork.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_subnetwork) (resource)
 - [google_project_iam_member.vm_manager_logwriter](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) (resource)
 - [google_project_service.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) (resource)
 - [google_service_account.vm_manager](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) (resource)
 - [null_resource.remove_previous_exit_node](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) (resource)
+- [random_integer.region_selector](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
 - [tailscale_tailnet_key.one_time_use](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/tailnet_key) (resource)
 - [google_compute_image.debian](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_image) (data source)
 - [google_compute_zones.region](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_zones) (data source)
@@ -79,6 +84,14 @@ Description: Activate required API services for the Google Cloud project.
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_use_premium_network_tier"></a> [use\_premium\_network\_tier](#input\_use\_premium\_network\_tier)
+
+Description: Whether or not to use Google Cloud's Premium Tier network. See: https://cloud.google.com/network-tiers/docs/overview
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_labels"></a> [labels](#input\_labels)
 
@@ -110,7 +123,7 @@ The following outputs are exported:
 
 ### <a name="output_enabled_apis"></a> [enabled\_apis](#output\_enabled\_apis)
 
-Description: n/a
+Description: The service APIs that have been enabled by this module.
 
 ### <a name="output_instance_id"></a> [instance\_id](#output\_instance\_id)
 

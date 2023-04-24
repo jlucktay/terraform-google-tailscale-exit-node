@@ -48,6 +48,6 @@ output "vm_manager_service_account_id" {
 
 output "enabled_apis" {
   description = "The service APIs that have been enabled by this module."
-  value = values(google_project_service.main).*.service
+  value       = values(google_project_service.main).*.service
   sensitive   = false
 }

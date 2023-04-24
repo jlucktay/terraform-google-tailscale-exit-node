@@ -31,3 +31,10 @@ variable "healthchecks_io_uuid" {
     error_message = "If providing a UUID, please use the following format: aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb"
   }
 }
+
+variable "use_premium_network_tier" {
+  description = "Whether or not to use Google Cloud's Premium Tier network. See: https://cloud.google.com/network-tiers/docs/overview"
+  type        = bool
+  default     = false
+  sensitive   = false
+}

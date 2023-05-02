@@ -154,7 +154,7 @@ Description: The ID of the Tailscale auth key that the exit node VM joined the t
 
 ### <a name="output_vm_manager_service_account_id"></a> [vm\_manager\_service\_account\_id](#output\_vm\_manager\_service\_account\_id)
 
-Description: The ID of the service account attached to the VM. If 'var.enable\_vm\_manager' is set this SA will also enable VM Manager.
+Description: The ID of the service account attached to the VM. If the `enable_vm_manager` input variable is set to `true` then this SA will also enable VM Manager.
 
 ### <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id)
 

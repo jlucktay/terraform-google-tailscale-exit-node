@@ -12,10 +12,6 @@ until curl --fail --output /dev/null --silent -- "https://tailscale.com/install.
   sleep 3
 done
 
-# Update the system.
-apt-get update
-apt-get dist-upgrade
-
 # Install Tailscale: https://tailscale.com/kb/1031/install-linux/
 curl --fail --location --show-error --silent -- "https://tailscale.com/install.sh" | sh
 

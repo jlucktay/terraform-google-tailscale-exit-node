@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euxo pipefail
+set -eux -o pipefail
 
 # Tailscale API docs are here: https://github.com/tailscale/tailscale/blob/main/api.md
 

@@ -4,6 +4,12 @@ variable "enable_apis" {
   default     = true
 }
 
+variable "enable_vm_manager" {
+  description = "Activate [Google Cloud VM Manager](https://cloud.google.com/compute/docs/vm-manager)."
+  type        = bool
+  default     = false
+}
+
 variable "labels" {
   description = "A map of labels to apply to contained resources."
   type        = map(string)
@@ -13,7 +19,6 @@ variable "labels" {
 variable "region" {
   description = "Google Cloud region to deploy resources in."
   type        = string
-  default     = ""
 
   validation {
     condition     = length(var.region) > 0
@@ -33,7 +38,7 @@ variable "healthchecks_io_uuid" {
 }
 
 variable "use_premium_network_tier" {
-  description = "Whether or not to use Google Cloud's Premium Tier network. See: https://cloud.google.com/network-tiers/docs/overview"
+  description = "Whether or not to use [Google Cloud's Premium Tier network](https://cloud.google.com/network-tiers/docs/overview)."
   type        = bool
   default     = false
   sensitive   = false

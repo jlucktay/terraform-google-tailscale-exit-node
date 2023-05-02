@@ -57,7 +57,8 @@ The following resources are used by this module:
 - [google_compute_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance) (resource)
 - [google_compute_network.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) (resource)
 - [google_compute_project_default_network_tier.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_default_network_tier) (resource)
-- [google_compute_project_metadata_item.enable_vm_manager_os_config](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
+- [google_compute_project_metadata_item.vm_manager_os_config](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
+- [google_compute_project_metadata_item.vm_metadata_guest_attributes](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
 - [google_compute_subnetwork.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_subnetwork) (resource)
 - [google_project_iam_member.vm_manager_logwriter](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) (resource)
 - [google_project_service.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) (resource)
@@ -71,7 +72,13 @@ The following resources are used by this module:
 
 ## Required Inputs
 
-No required inputs.
+The following input variables are required:
+
+### <a name="input_region"></a> [region](#input\_region)
+
+Description: Google Cloud region to deploy resources in.
+
+Type: `string`
 
 ## Optional Inputs
 
@@ -85,9 +92,17 @@ Type: `bool`
 
 Default: `true`
 
+### <a name="input_enable_vm_manager"></a> [enable\_vm\_manager](#input\_enable\_vm\_manager)
+
+Description: Activate [Google Cloud VM Manager](https://cloud.google.com/compute/docs/vm-manager).
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_use_premium_network_tier"></a> [use\_premium\_network\_tier](#input\_use\_premium\_network\_tier)
 
-Description: Whether or not to use Google Cloud's Premium Tier network. See: https://cloud.google.com/network-tiers/docs/overview
+Description: Whether or not to use [Google Cloud's Premium Tier network](https://cloud.google.com/network-tiers/docs/overview).
 
 Type: `bool`
 
@@ -104,14 +119,6 @@ Default: `{}`
 ### <a name="input_healthchecks_io_uuid"></a> [healthchecks\_io\_uuid](#input\_healthchecks\_io\_uuid)
 
 Description: UUID of a check at Healthchecks.io that the exit node VM will poll every 15 minutes with curl from a cron job. If left unset then the check will not be set up.
-
-Type: `string`
-
-Default: `""`
-
-### <a name="input_region"></a> [region](#input\_region)
-
-Description: Google Cloud region to deploy resources in.
 
 Type: `string`
 
@@ -147,7 +154,7 @@ Description: The ID of the Tailscale auth key that the exit node VM joined the t
 
 ### <a name="output_vm_manager_service_account_id"></a> [vm\_manager\_service\_account\_id](#output\_vm\_manager\_service\_account\_id)
 
-Description: The ID of the service account attached to the VM which enables the VM Manager/OS Config service.
+Description: The ID of the service account attached to the VM. If 'var.enable\_vm\_manager' is set this SA will also enable VM Manager.
 
 ### <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id)
 

@@ -41,7 +41,7 @@ output "tailscale_key_id" {
 }
 
 output "vm_manager_service_account_id" {
-  description = "The ID of the service account attached to the VM which enables the VM Manager/OS Config service."
+  description = "The ID of the service account attached to the VM. If 'var.enable_vm_manager' is set this SA will also enable VM Manager."
   value       = google_service_account.vm_manager.id
   sensitive   = false
 }

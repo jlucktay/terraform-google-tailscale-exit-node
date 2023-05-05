@@ -48,7 +48,7 @@ resource "google_compute_instance" "main" {
 
     initialize_params {
       image  = data.google_compute_image.debian.self_link
-      labels = merge(var.labels, local.labels)
+      labels = merge(local.labels, var.labels)
       size   = 10
       type   = "pd-standard"
     }
@@ -83,7 +83,7 @@ resource "google_compute_instance" "main" {
     enable_vtpm                 = true
   }
 
-  labels = merge(var.labels, local.labels)
+  labels = merge(local.labels, var.labels)
 
   tags = [
     "ssh"

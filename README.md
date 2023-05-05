@@ -34,23 +34,23 @@ terraform apply --replace=module.this.tailscale_tailnet_key.one_time_use
 
 The following requirements are needed by this module:
 
-- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.4)
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
-- <a name="requirement_google"></a> [google](#requirement\_google) (~> 4.61)
+- <a name="requirement_google"></a> [google](#requirement\_google) (~> 4.0)
 
-- <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) (~> 0.13)
+- <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) (~> 0.0)
 
 ## Providers
 
 The following providers are used by this module:
 
-- <a name="provider_google"></a> [google](#provider\_google) (~> 4.61)
+- <a name="provider_google"></a> [google](#provider\_google) (~> 4.0)
 
 - <a name="provider_null"></a> [null](#provider\_null)
 
 - <a name="provider_random"></a> [random](#provider\_random)
 
-- <a name="provider_tailscale"></a> [tailscale](#provider\_tailscale) (~> 0.13)
+- <a name="provider_tailscale"></a> [tailscale](#provider\_tailscale) (~> 0.0)
 
 ## Modules
 

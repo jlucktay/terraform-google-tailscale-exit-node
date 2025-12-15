@@ -4,7 +4,7 @@ terraform {
       source = "hashicorp/google"
 
       # Pin to major version 4, and allow minor/patch upgrades.
-      version = "~> 6.0"
+      version = "~> 7.13"
     }
 
     tailscale = {

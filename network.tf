@@ -3,11 +3,14 @@ locals {
 }
 
 resource "google_compute_project_default_network_tier" "main" {
+  project      = data.google_project.this.project_id
   network_tier = local.network_tier
 }
 
 resource "google_compute_network" "main" {
   name = "exit-node-network"
+
+  project = data.google_project.this.project_id
 
   description             = "Main VPC for the exit node and its subnet."
   auto_create_subnetworks = false
@@ -15,6 +18,8 @@ resource "google_compute_network" "main" {
 
 resource "google_compute_subnetwork" "main" {
   name = "exit-node-subnet"
+
+  project = data.google_project.this.project_id
 
   ip_cidr_range = "10.128.0.0/20"
   network       = google_compute_network.main.id

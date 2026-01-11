@@ -10,7 +10,8 @@ data "google_compute_image" "debian" {
 }
 
 data "google_compute_zones" "region" {
-  region = var.region
+  project = data.google_project.this.project_id
+  region  = var.region
 }
 
 resource "random_integer" "region_selector" {
@@ -25,6 +26,8 @@ resource "random_integer" "region_selector" {
 
 resource "google_compute_instance" "main" {
   name = "exit-node-vm"
+
+  project = data.google_project.this.project_id
 
   machine_type = "e2-micro"
   zone         = element(data.google_compute_zones.region.names, random_integer.region_selector.result)

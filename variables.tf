@@ -16,6 +16,16 @@ variable "labels" {
   default     = {}
 }
 
+variable "project_id" {
+  description = "The ID of the Google Cloud project in which resources will be created."
+  type        = string
+
+  validation {
+    condition     = length(var.project_id) > 0
+    error_message = "The 'project_id' input variable must be a string longer than zero characters."
+  }
+}
+
 variable "region" {
   description = "Google Cloud region to deploy resources in."
   type        = string

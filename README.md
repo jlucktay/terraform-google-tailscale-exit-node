@@ -21,6 +21,13 @@ Both the Google Cloud and Tailscale providers will require authentication:
 - Google Cloud provider authentication is
   [documented here](https://registry.terraform.io/providers/hashicorp/google/latest/docs/guides/provider_reference#authentication).
 
+### Google Cloud project
+
+The module has an input variable for the Google Cloud project into which it will provision the resources detailed below.
+This project **must already exist**; the module will not provision the project itself, only the resources inside of it, and the necessary APIs/services for these resources.
+
+### Tailscale key replacement
+
 If the exit node VM needs to be rotated, into a different region for example, it is recommended to have Terraform
 force-replace the `tailscale_tailnet_key` resource, like so:
 
@@ -36,7 +43,7 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.0)
 
-- <a name="requirement_google"></a> [google](#requirement\_google) (~> 4.0)
+- <a name="requirement_google"></a> [google](#requirement\_google) (~> 7.0)
 
 - <a name="requirement_tailscale"></a> [tailscale](#requirement\_tailscale) (~> 0.0)
 
@@ -44,7 +51,7 @@ The following requirements are needed by this module:
 
 The following providers are used by this module:
 
-- <a name="provider_google"></a> [google](#provider\_google) (~> 4.0)
+- <a name="provider_google"></a> [google](#provider\_google) (~> 7.0)
 
 - <a name="provider_null"></a> [null](#provider\_null)
 
@@ -81,6 +88,12 @@ The following resources are used by this module:
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_project_id"></a> [project\_id](#input\_project\_id)
+
+Description: The ID of the Google Cloud project in which resources will be created.
+
+Type: `string`
 
 ### <a name="input_region"></a> [region](#input\_region)
 

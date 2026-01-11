@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eux -o pipefail
+set -euxo pipefail
 
 declare -i attempts=0
 
@@ -32,4 +32,4 @@ MAILTO=""
 EOT
 %{ endfor ~}
 
-tailscale up --auth-key="${ts_auth_key}" --advertise-exit-node
+tailscale up --advertise-exit-node --auth-key="${ts_auth_key}"

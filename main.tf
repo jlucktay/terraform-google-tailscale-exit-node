@@ -6,7 +6,7 @@ locals {
 
 data "google_compute_image" "debian" {
   project = "debian-cloud"
-  family  = "debian-11"
+  family  = "debian-13"
 }
 
 data "google_compute_zones" "region" {
@@ -18,8 +18,7 @@ resource "random_integer" "region_selector" {
   max = length(data.google_compute_zones.region.names)
 
   keepers = {
-    # Pick a new region for the exit node each time we regenerate the Tailnet key, which in turns causes the exit node
-    # to be recreated.
+    # Pick a new region for the exit node each time we regenerate the Tailnet key, which in turns causes the exit node to be recreated.
     tail_key = tailscale_tailnet_key.one_time_use.key
   }
 }

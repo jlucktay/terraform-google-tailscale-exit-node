@@ -16,6 +16,17 @@ output "instance_id" {
   sensitive   = false
 }
 
+output "instance_logs_url" {
+  description = "The URL to access Google Cloud logging for the exit node VM."
+  sensitive   = false
+
+  value = format(
+    "https://console.cloud.google.com/logs/query;query=labels.instance_name%%3D%%22%s%%22;duration=P1D?project=%s",
+    google_compute_instance.main.name,
+    google_compute_instance.main.project,
+  )
+}
+
 output "instance_ssh_command" {
   description = "The command line to run for SSH access into the exit node VM."
   sensitive   = false

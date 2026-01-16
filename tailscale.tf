@@ -13,6 +13,12 @@ resource "tailscale_tailnet_key" "one_time_use" {
 resource "null_resource" "remove_previous_exit_node" {
   provisioner "local-exec" {
     command = format("%s/remove_previous_exit_node.sh", path.module)
+    when    = destroy
+
+    environment = {
+      # This string value must match the exit node VM's hostname, but cannot be a `local.*` reference.
+      "DEVICE_HOSTNAME" = "tailscale-exit-node-vm"
+    }
   }
 
   lifecycle {

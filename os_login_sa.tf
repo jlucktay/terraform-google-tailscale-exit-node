@@ -12,11 +12,11 @@ data "google_project" "this" {
 }
 
 resource "google_service_account" "vm_manager" {
-  project = data.google_project.this.project_id
+  project     = data.google_project.this.project_id
+  description = "VM Manager (OS Config API)"
 
   account_id   = format("service-%s", data.google_project.this.number)
   display_name = "VM Manager (OS Config API)"
-  description  = "VM Manager (OS Config API)"
 }
 
 resource "google_project_iam_member" "vm_manager_logwriter" {

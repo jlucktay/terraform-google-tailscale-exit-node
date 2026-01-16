@@ -1,11 +1,3 @@
-locals {
-  project_services = [
-    "cloudresourcemanager.googleapis.com",
-    "compute.googleapis.com",
-    "osconfig.googleapis.com",
-  ]
-}
-
 resource "google_project_service" "main" {
   for_each = var.enable_apis ? toset(local.project_services) : []
 

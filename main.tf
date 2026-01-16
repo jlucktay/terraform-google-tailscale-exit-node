@@ -1,9 +1,3 @@
-locals {
-  labels = {
-    "terraform-module" = "jlucktay_tailscale-exit-node_google"
-  }
-}
-
 data "google_compute_image" "debian" {
   project = "debian-cloud"
   family  = "debian-13"
@@ -25,7 +19,8 @@ resource "random_integer" "region_selector" {
 }
 
 resource "google_compute_instance" "main" {
-  name = "exit-node-vm"
+  name        = "tailscale-exit-node-vm"
+  description = "Tailscale exit node VM within the dedicated VPC/subnet."
 
   project = data.google_project.this.project_id
 
@@ -34,8 +29,6 @@ resource "google_compute_instance" "main" {
 
   allow_stopping_for_update = true
   can_ip_forward            = true
-
-  description = "Tailscale exit node VM within the dedicated VPC/subnet."
 
   metadata = {
     # Required
@@ -50,7 +43,7 @@ resource "google_compute_instance" "main" {
 
   boot_disk {
     auto_delete = true
-    device_name = "exit-node-vm-pd0"
+    device_name = "tailscale-exit-node-vm-pd0"
 
     initialize_params {
       image  = data.google_compute_image.debian.self_link

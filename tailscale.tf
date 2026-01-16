@@ -1,4 +1,6 @@
 resource "tailscale_tailnet_key" "one_time_use" {
+  description = "Used by the exit node VM to join the Tailnet"
+
   ephemeral     = true
   preauthorized = true
   reusable      = false

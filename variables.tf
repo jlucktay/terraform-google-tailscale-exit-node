@@ -4,6 +4,12 @@ variable "enable_apis" {
   default     = true
 }
 
+variable "enable_tailscale_ssh" {
+  description = "Enable [Tailscale SSH](https://tailscale.com/kb/1193/tailscale-ssh/) on the exit node."
+  type        = bool
+  default     = false
+}
+
 variable "enable_vm_manager" {
   description = "Activate [Google Cloud VM Manager](https://cloud.google.com/compute/docs/vm-manager)."
   type        = bool

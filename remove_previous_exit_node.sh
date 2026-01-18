@@ -28,7 +28,7 @@ if [[ -z $exit_node_id ]]; then
 	exit 0
 fi
 
-if ! curl --request DELETE --user "$TAILSCALE_API_KEY:" "https://api.tailscale.com/api/v2/device/$exit_node_id"; then
+if ! curl --request DELETE --user "$TAILSCALE_API_KEY:" "https://api.tailscale.com/api/v2/device/$exit_node_id" &> /dev/null; then
 	echo >&2 "Could not delete exit node ID '$exit_node_id' from Tailnet; exiting."
 	exit 1
 fi

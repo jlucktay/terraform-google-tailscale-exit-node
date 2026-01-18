@@ -9,5 +9,6 @@ locals {
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
     "osconfig.googleapis.com",
+    "secretmanager.googleapis.com",
   ]
 }

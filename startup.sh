@@ -2,6 +2,7 @@
 set -euxo pipefail
 
 # Tailscale exit node VM startup script
+# NOTE: xtrace will be toggled off and on (set +x; ...; set -x;) as necessary to guard against emitting secrets.
 
 declare -i attempts=0
 
@@ -25,8 +26,21 @@ declare -a curl_flags=(
 readonly metadata_base="http://metadata.google.internal/computeMetadata/v1/instance/attributes"
 
 enable_tailscale_ssh="$(curl "${curl_flags[@]}" "$metadata_base/enable-tailscale-ssh")"
-healthchecks_io_uuid="$(curl "${curl_flags[@]}" "$metadata_base/healthchecks-io-uuid")"
-tailscale_auth_key="$(curl "${curl_flags[@]}" "$metadata_base/tailscale-auth-key")"
+
+# Retrieve sensitive values from Google Secret Manager.
+cmd_tailscale_auth_key='gcloud secrets versions access latest --secret="tailscale-auth-key"'
+set +x
+tailscale_auth_key="$(eval "$cmd_tailscale_auth_key")"
+set -x
+
+# This secret is optional.
+cmd_healthchecks_io_uuid='gcloud secrets versions access latest --secret="healthchecks-io-uuid"'
+set +x
+if ! healthchecks_io_uuid="$(eval "$cmd_healthchecks_io_uuid")"; then
+	# If the secret cannot be retrieved, set the variable to an empty string.
+	healthchecks_io_uuid=""
+fi
+set -x
 
 # Install Tailscale: https://tailscale.com/kb/1031/install-linux/
 curl --fail --location --show-error --silent -- "https://tailscale.com/install.sh" | sh
@@ -49,16 +63,27 @@ chmod 755 /etc/networkd-dispatcher/routable.d/50-tailscale
 /etc/networkd-dispatcher/routable.d/50-tailscale
 
 # Set up Healthchecks.io cron job, if a non-empty UUID string was passed in.
-if [[ -n $healthchecks_io_uuid ]]; then
-	cat <<- EOT > /etc/cron.d/healthchecks
-		SHELL="/bin/bash"
-		PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-		MAILTO=""
+readonly cron_d_healthchecks_file="/etc/cron.d/healthchecks"
 
-		# Health check ping
-		*/15 * * * *   root   curl --fail --max-time 10 --retry 5 --show-error --silent "https://hc-ping.com/$healthchecks_io_uuid"
-	EOT
+read -r -d '\0' cron_d_healthchecks <<- EOF
+	SHELL="/bin/bash"
+	PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+	MAILTO=""
+
+	# Health check ping
+	*/15 * * * *   root   curl --fail --max-time 10 --retry 5 --show-error --silent "https://hc-ping.com/uuid"
+	\0
+EOF
+
+set +x
+if [[ -n $healthchecks_io_uuid ]]; then
+	echo "$cron_d_healthchecks" > "$cron_d_healthchecks_file"
+
+	sed --in-place "$ s/uuid\"\$/$healthchecks_io_uuid\"/" "$cron_d_healthchecks_file"
+
+	echo "Wrote crontab entry for healthcheck (with UUID) out to '$cron_d_healthchecks_file'."
 fi
+set -x
 
 # Ensure node state encrypts at rest: https://tailscale.com/kb/1596/secure-node-state-storage#linux
 sed -i '/FLAGS=""/c\FLAGS="--encrypt-state"' /etc/default/tailscaled
@@ -67,12 +92,21 @@ systemctl restart tailscaled
 # Accumulate flags to call 'tailscale up' with.
 declare -a tailscale_up_flags=(
 	--advertise-exit-node
-	--auth-key="$tailscale_auth_key"
 )
+
+set +x
+tailscale_up_flags+=(--auth-key="$tailscale_auth_key")
+set -x
 
 if [[ $enable_tailscale_ssh == "1" ]]; then
 	tailscale_up_flags+=(--ssh)
 fi
 
 # Advertise the VM as an exit node: https://tailscale.com/kb/1408/quick-guide-exit-nodes?tab=linux
-tailscale up "${tailscale_up_flags[@]}"
+# shellcheck disable=SC2016
+cmd_tailscale_up='tailscale up "${tailscale_up_flags[@]}"'
+set +x
+eval "$cmd_tailscale_up"
+set -x
+
+tailscale status --json --peers=false | jq --sort-keys

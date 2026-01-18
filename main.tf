@@ -31,12 +31,8 @@ resource "google_compute_instance" "main" {
   can_ip_forward            = true
 
   metadata = {
-    # Required
-    "tailscale-auth-key" = tailscale_tailnet_key.one_time_use.key
-
     # Optional
     "enable-tailscale-ssh" = var.enable_tailscale_ssh ? "1" : ""
-    "healthchecks-io-uuid" = length(var.healthchecks_io_uuid) > 0 ? var.healthchecks_io_uuid : ""
   }
 
   metadata_startup_script = file("${path.module}/startup.sh")
@@ -86,5 +82,9 @@ resource "google_compute_instance" "main" {
 
   tags = [
     "ssh"
+  ]
+
+  depends_on = [
+    google_secret_manager_secret_version.tailscale_auth_key
   ]
 }

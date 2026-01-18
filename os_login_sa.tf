@@ -23,8 +23,9 @@ resource "google_project_iam_member" "vm_manager_logwriter" {
   for_each = var.enable_vm_manager ? { "enabled" = true } : {}
 
   project = data.google_project.this.project_id
-  role    = "roles/logging.logWriter"
-  member  = google_service_account.vm_manager.member
+
+  role   = "roles/logging.logWriter"
+  member = google_service_account.vm_manager.member
 }
 
 # https://cloud.google.com/compute/docs/metadata/overview#guest_attributes
@@ -33,4 +34,24 @@ resource "google_compute_project_metadata_item" "vm_metadata_guest_attributes" {
 
   key   = "enable-guest-attributes"
   value = "TRUE"
+}
+
+resource "google_secret_manager_secret_iam_member" "vm_manager_secretaccessor_tailscale" {
+  project = data.google_project.this.project_id
+
+  secret_id = google_secret_manager_secret.tailscale_auth_key.id
+
+  role   = "roles/secretmanager.secretAccessor"
+  member = google_service_account.vm_manager.member
+}
+
+resource "google_secret_manager_secret_iam_member" "vm_manager_secretaccessor_healthchecks" {
+  count = length(var.healthchecks_io_uuid) > 0 ? 1 : 0
+
+  project = data.google_project.this.project_id
+
+  secret_id = google_secret_manager_secret.healthchecks_io_uuid[count.index].id
+
+  role   = "roles/secretmanager.secretAccessor"
+  member = google_service_account.vm_manager.member
 }

@@ -8,7 +8,6 @@ locals {
   project_services = [
     "cloudresourcemanager.googleapis.com",
     "compute.googleapis.com",
-    "osconfig.googleapis.com",
     "secretmanager.googleapis.com",
   ]
 }

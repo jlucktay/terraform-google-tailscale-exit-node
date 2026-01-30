@@ -51,9 +51,9 @@ output "tailscale_key_id" {
   sensitive   = false
 }
 
-output "vm_manager_service_account_id" {
-  description = "The ID of the service account attached to the VM. If the `enable_vm_manager` input variable is set to `true` then this SA will also enable VM Manager."
-  value       = google_service_account.vm_manager.id
+output "compute_google_service_account_id" {
+  description = "The ID of the Google service account attached to the exit node VM."
+  value       = google_service_account.compute.id
   sensitive   = false
 }
 

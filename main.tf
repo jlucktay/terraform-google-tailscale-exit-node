@@ -1,3 +1,7 @@
+data "google_project" "this" {
+  project_id = var.project_id
+}
+
 data "google_compute_image" "debian" {
   project = "debian-cloud"
   family  = "debian-13"
@@ -13,9 +17,18 @@ resource "random_integer" "region_selector" {
   max = length(data.google_compute_zones.region.names)
 
   keepers = {
-    # Pick a new region for the exit node each time we regenerate the Tailnet key, which in turns causes the exit node to be recreated.
+    # Pick a new region for the exit node each time we regenerate the tailnet key, which in turns causes the exit node to be recreated.
     tail_key = tailscale_tailnet_key.one_time_use.key
   }
+}
+
+# Guest attributes are used to pass non-sensitive info into the VM's startup script.
+# https://cloud.google.com/compute/docs/metadata/overview#guest_attributes
+resource "google_compute_project_metadata_item" "vm_metadata_guest_attributes" {
+  project = data.google_project.this.project_id
+
+  key   = "enable-guest-attributes"
+  value = "TRUE"
 }
 
 resource "google_compute_instance" "main" {
@@ -65,7 +78,7 @@ resource "google_compute_instance" "main" {
   }
 
   service_account {
-    email = google_service_account.vm_manager.email
+    email = google_service_account.compute.email
 
     scopes = [
       "cloud-platform",
@@ -85,6 +98,7 @@ resource "google_compute_instance" "main" {
   ]
 
   depends_on = [
-    google_secret_manager_secret_version.tailscale_auth_key
+    google_project_service.main["compute.googleapis.com"],
+    google_secret_manager_secret_version.tailscale_auth_key,
   ]
 }

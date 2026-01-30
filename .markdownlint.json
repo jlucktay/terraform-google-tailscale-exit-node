@@ -1,4 +1,5 @@
 {
+  "$schema": "https://github.com/DavidAnson/markdownlint/raw/refs/heads/main/schema/markdownlint-config-schema.json",
   "MD013": false,
   "MD033": { "allowed_elements": ["a"] }
 }

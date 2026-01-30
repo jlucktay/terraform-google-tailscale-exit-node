@@ -9,7 +9,7 @@ if [[ -z ${TAILSCALE_API_KEY-} ]]; then
 fi
 
 if ! tailnet_devices=$(curl --location --request GET --silent --user "$TAILSCALE_API_KEY:" "https://api.tailscale.com/api/v2/tailnet/-/devices"); then
-	echo >&2 "Could not get devices on Tailnet from Tailscale API; exiting."
+	echo >&2 "Could not get devices on tailnet from Tailscale API; exiting."
 	exit 1
 fi
 
@@ -19,17 +19,17 @@ if [[ $tailnet_devices == '{"message":"API token invalid"}' ]]; then
 fi
 
 if ! exit_node_id=$(jq --arg device_hostname "${DEVICE_HOSTNAME:?}" --raw-output '.devices[] | select(.hostname == $device_hostname) | .nodeId' <<< "$tailnet_devices"); then
-	echo >&2 "Could not parse exit node ID from list of Tailnet devices; exiting."
+	echo >&2 "Could not parse exit node ID from list of tailnet devices; exiting."
 	exit 1
 fi
 
 if [[ -z $exit_node_id ]]; then
-	echo "No previous exit node device found on Tailnet; exiting."
+	echo "No previous exit node device found on tailnet; exiting."
 	exit 0
 fi
 
 if ! curl --request DELETE --user "$TAILSCALE_API_KEY:" "https://api.tailscale.com/api/v2/device/$exit_node_id" &> /dev/null; then
-	echo >&2 "Could not delete exit node ID '$exit_node_id' from Tailnet; exiting."
+	echo >&2 "Could not delete exit node ID '$exit_node_id' from tailnet; exiting."
 	exit 1
 fi
 

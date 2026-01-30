@@ -72,12 +72,17 @@ The following resources are used by this module:
 - [google_compute_instance.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance) (resource)
 - [google_compute_network.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) (resource)
 - [google_compute_project_default_network_tier.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_default_network_tier) (resource)
-- [google_compute_project_metadata_item.vm_manager_os_config](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
 - [google_compute_project_metadata_item.vm_metadata_guest_attributes](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata_item) (resource)
 - [google_compute_subnetwork.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_subnetwork) (resource)
-- [google_project_iam_member.vm_manager_logwriter](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) (resource)
+- [google_project_iam_member.compute_gsa_logwriter](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_iam_member) (resource)
 - [google_project_service.main](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) (resource)
-- [google_service_account.vm_manager](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) (resource)
+- [google_secret_manager_secret.healthchecks_io_uuid](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) (resource)
+- [google_secret_manager_secret.tailscale_auth_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret) (resource)
+- [google_secret_manager_secret_iam_member.compute_gsa_secretaccessor_healthchecks](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) (resource)
+- [google_secret_manager_secret_iam_member.compute_gsa_secretaccessor_tailscale](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_iam_member) (resource)
+- [google_secret_manager_secret_version.healthchecks_io_uuid](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) (resource)
+- [google_secret_manager_secret_version.tailscale_auth_key](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/secret_manager_secret_version) (resource)
+- [google_service_account.compute](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) (resource)
 - [null_resource.remove_previous_exit_node](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) (resource)
 - [random_integer.region_selector](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
 - [tailscale_tailnet_key.one_time_use](https://registry.terraform.io/providers/tailscale/tailscale/latest/docs/resources/tailnet_key) (resource)
@@ -113,9 +118,9 @@ Type: `bool`
 
 Default: `true`
 
-### <a name="input_enable_vm_manager"></a> [enable\_vm\_manager](#input\_enable\_vm\_manager)
+### <a name="input_enable_tailscale_ssh"></a> [enable\_tailscale\_ssh](#input\_enable\_tailscale\_ssh)
 
-Description: Activate [Google Cloud VM Manager](https://cloud.google.com/compute/docs/vm-manager).
+Description: Enable [Tailscale SSH](https://tailscale.com/kb/1193/tailscale-ssh/) on the exit node.
 
 Type: `bool`
 
@@ -149,6 +154,10 @@ Default: `""`
 
 The following outputs are exported:
 
+### <a name="output_compute_google_service_account_id"></a> [compute\_google\_service\_account\_id](#output\_compute\_google\_service\_account\_id)
+
+Description: The ID of the Google service account attached to the exit node VM.
+
 ### <a name="output_enabled_apis"></a> [enabled\_apis](#output\_enabled\_apis)
 
 Description: The service APIs that have been enabled by this module.
@@ -156,6 +165,10 @@ Description: The service APIs that have been enabled by this module.
 ### <a name="output_instance_id"></a> [instance\_id](#output\_instance\_id)
 
 Description: The ID of the exit node VM.
+
+### <a name="output_instance_logs_url"></a> [instance\_logs\_url](#output\_instance\_logs\_url)
+
+Description: The URL to access Google Cloud logging for the exit node VM.
 
 ### <a name="output_instance_public_ip"></a> [instance\_public\_ip](#output\_instance\_public\_ip)
 
@@ -172,10 +185,6 @@ Description: The ID of the regional subnet.
 ### <a name="output_tailscale_key_id"></a> [tailscale\_key\_id](#output\_tailscale\_key\_id)
 
 Description: The ID of the Tailscale auth key that the exit node VM joined the tailnet with.
-
-### <a name="output_vm_manager_service_account_id"></a> [vm\_manager\_service\_account\_id](#output\_vm\_manager\_service\_account\_id)
-
-Description: The ID of the service account attached to the VM. If the `enable_vm_manager` input variable is set to `true` then this SA will also enable VM Manager.
 
 ### <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id)
 

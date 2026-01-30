@@ -10,12 +10,6 @@ variable "enable_tailscale_ssh" {
   default     = false
 }
 
-variable "enable_vm_manager" {
-  description = "Activate [Google Cloud VM Manager](https://cloud.google.com/compute/docs/vm-manager)."
-  type        = bool
-  default     = false
-}
-
 variable "labels" {
   description = "A map of labels to apply to contained resources."
   type        = map(string)
@@ -46,6 +40,7 @@ variable "healthchecks_io_uuid" {
   description = "UUID of a check at Healthchecks.io that the exit node VM will poll every 15 minutes with curl from a cron job. If left unset then the check will not be set up."
   type        = string
   default     = ""
+  sensitive   = true
 
   validation {
     condition     = length(var.healthchecks_io_uuid) == 0 || length(var.healthchecks_io_uuid) == 36

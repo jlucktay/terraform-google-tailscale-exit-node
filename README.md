@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 MD054 -->
+
 # Tailscale Exit Node on Google Cloud
 
 Infrastructure for a Tailscale exit node.

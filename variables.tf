@@ -36,6 +36,12 @@ variable "region" {
   }
 }
 
+variable "vm_machine_type" {
+  description = "Specify the desired [machine type](https://docs.cloud.google.com/compute/docs/machine-resource) for the exit node VM. Note that it must be available in the chosen region."
+  type        = string
+  default     = "f1-micro"
+}
+
 variable "healthchecks_io_uuid" {
   description = "UUID of a check at Healthchecks.io that the exit node VM will poll every 15 minutes with curl from a cron job. If left unset then the check will not be set up."
   type        = string

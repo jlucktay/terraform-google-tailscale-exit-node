@@ -9,6 +9,11 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 ### Added
 
 - This backfilled CHANGELOG.
+- Input variable to override the default machine type for the exit node VM.
+
+### Changed
+
+- Exit node VM machine type default from `e2-micro` to `f1-micro`.
 
 ## [v0.9.0] - 2026-01-30
 

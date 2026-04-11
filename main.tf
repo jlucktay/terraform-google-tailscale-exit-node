@@ -37,7 +37,7 @@ resource "google_compute_instance" "main" {
 
   project = data.google_project.this.project_id
 
-  machine_type = "e2-micro"
+  machine_type = var.vm_machine_type
   zone         = element(data.google_compute_zones.region.names, random_integer.region_selector.result)
 
   allow_stopping_for_update = true

@@ -152,6 +152,14 @@ Type: `string`
 
 Default: `""`
 
+### <a name="input_vm_machine_type"></a> [vm\_machine\_type](#input\_vm\_machine\_type)
+
+Description: Specify the desired [machine type](https://docs.cloud.google.com/compute/docs/machine-resource) for the exit node VM. Note that it must be available in the chosen region.
+
+Type: `string`
+
+Default: `"f1-micro"`
+
 ## Outputs
 
 The following outputs are exported:

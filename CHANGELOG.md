@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 - This backfilled CHANGELOG.
 - Input variable to override the default machine type for the exit node VM.
+- `mise` and `pre-commit` configs:
+  - Use the latest versions available of both `terraform` and `terraform-docs`.
+  - Run `terraform-docs` and miscellaneous other checks on any git hooks `pre-commit` is installed to.
 
 ### Changed
 

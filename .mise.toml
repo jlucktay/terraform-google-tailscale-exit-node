@@ -1,0 +1,3 @@
+[tools]
+"aqua:hashicorp/terraform" = "latest"
+"aqua:terraform-docs/terraform-docs" = "latest"

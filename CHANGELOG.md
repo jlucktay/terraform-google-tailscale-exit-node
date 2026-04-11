@@ -13,7 +13,9 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ### Changed
 
-- Exit node VM machine type default from `e2-micro` to `f1-micro`.
+- Exit node VM:
+  - Machine type default from `e2-micro` to `f1-micro`.
+  - Metadata now uses a conditional `local`, instead of potentially ending up with a key having an empty value.
 
 ## [v0.9.0] - 2026-01-30
 

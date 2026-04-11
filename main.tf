@@ -43,10 +43,7 @@ resource "google_compute_instance" "main" {
   allow_stopping_for_update = true
   can_ip_forward            = true
 
-  metadata = {
-    # Optional
-    "enable-tailscale-ssh" = var.enable_tailscale_ssh ? "1" : ""
-  }
+  metadata = local.vm_metadata
 
   metadata_startup_script = file("${path.module}/startup.sh")
 

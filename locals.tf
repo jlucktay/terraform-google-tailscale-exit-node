@@ -10,4 +10,8 @@ locals {
     "compute.googleapis.com",
     "secretmanager.googleapis.com",
   ]
+
+  vm_metadata = var.enable_tailscale_ssh ? {
+    "enable-tailscale-ssh" = "1"
+  } : {}
 }

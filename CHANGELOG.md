@@ -71,7 +71,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 
 ### Removed
 
-- System upgrade with `apt` from the VM bootstrap script; it is quicker to reroll the VM than to run the upgrade.
+- System upgrade with `apt` from the VM bootstrap script; it is quicker to re-roll the VM than to run the upgrade.
 
 ## [v0.6.0] - 2023-05-02
 

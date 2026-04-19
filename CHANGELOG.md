@@ -153,13 +153,13 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
   - Firewall to allow SSH from Google Cloud's Identity-Aware Proxy.
   - Service account with Logs Writer role.
   - VM running Debian 11, run by the above SA.
-  - Templated startup script, attached to the above VM, to:
+  - Template of the startup script, attached to the above VM, to:
     - Install Tailscale.
     - Configure the VM.
     - Optionally set up a cron job for Healthchecks.io.
     - Join the tailnet and advertise as an exit node.
   - Project metadata entry to enable OS Config.
-- Tailscale provider provisioning an ephemeral, preauthorised, non-reusable tailnet key.
+- Tailscale provider provisioning an ephemeral, pre-authorised, non-reusable tailnet key.
 - Input variables to control the following:
   - Whether to activate the required APIs/services in the Google Cloud project.
   - Labels to apply to provisioned resources.

@@ -158,7 +158,7 @@ Description: UUID of a check at Healthchecks.io that the exit node VM will poll 
 
 Type: `string`
 
-Default: `""`
+Default: `null`
 
 ### <a name="input_vm_machine_type"></a> [vm\_machine\_type](#input\_vm\_machine\_type)
 

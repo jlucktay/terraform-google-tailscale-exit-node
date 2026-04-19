@@ -45,12 +45,13 @@ variable "vm_machine_type" {
 variable "healthchecks_io_uuid" {
   description = "UUID of a check at Healthchecks.io that the exit node VM will poll every 15 minutes with curl from a cron job. If left unset then the check will not be set up."
   type        = string
-  default     = ""
+  nullable    = true
+  default     = null
   sensitive   = true
 
   validation {
-    condition     = length(var.healthchecks_io_uuid) == 0 || length(var.healthchecks_io_uuid) == 36
-    error_message = "If providing a UUID, please use the following format: aaaaaaaa-1111-2222-3333-bbbbbbbbbbbb"
+    condition     = var.healthchecks_io_uuid == null || length(var.healthchecks_io_uuid) == 36
+    error_message = "If providing a UUID for Healthchecks.io, please supply a string in the following format: a1b2c3d4-a1b2-a1b2-a1b2-a1b2c3d4e5f6"
   }
 }
 

@@ -17,7 +17,7 @@ resource "google_secret_manager_secret_version" "tailscale_auth_key" {
 }
 
 resource "google_secret_manager_secret" "healthchecks_io_uuid" {
-  count = length(var.healthchecks_io_uuid) > 0 ? 1 : 0
+  count = var.healthchecks_io_uuid != null ? 1 : 0
 
   secret_id = "healthchecks-io-uuid"
 
@@ -31,7 +31,7 @@ resource "google_secret_manager_secret" "healthchecks_io_uuid" {
 }
 
 resource "google_secret_manager_secret_version" "healthchecks_io_uuid" {
-  count = length(var.healthchecks_io_uuid) > 0 ? 1 : 0
+  count = var.healthchecks_io_uuid != null ? 1 : 0
 
   secret = google_secret_manager_secret.healthchecks_io_uuid[count.index].id
 

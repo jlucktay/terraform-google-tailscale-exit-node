@@ -23,7 +23,7 @@ resource "google_secret_manager_secret_iam_member" "compute_gsa_secretaccessor_t
 }
 
 resource "google_secret_manager_secret_iam_member" "compute_gsa_secretaccessor_healthchecks" {
-  count = length(var.healthchecks_io_uuid) > 0 ? 1 : 0
+  count = var.healthchecks_io_uuid != null ? 1 : 0
 
   project = data.google_project.this.project_id
 

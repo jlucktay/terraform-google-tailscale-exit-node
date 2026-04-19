@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
   - Machine type default from `e2-micro` to `f1-micro`.
   - Metadata now uses a conditional `local`, instead of potentially ending up with a key having an empty value.
   - Healthchecks.io input variable is now nullable and defaults to such, instead of an empty string.
+  - Ignores changes in the source image used, so that applying and reapplying the module after a new weekly image is baked won't automatically bounce the VM.
 
 ## [v0.9.0] - 2026-01-30
 

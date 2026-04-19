@@ -136,6 +136,14 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_vm_extra_iap_ports"></a> [vm\_extra\_iap\_ports](#input\_vm\_extra\_iap\_ports)
+
+Description: Additional ports to allow traffic into the exit node VM on, coming from Google Cloud's Identity-Aware Proxy.
+
+Type: `list(number)`
+
+Default: `[]`
+
 ### <a name="input_labels"></a> [labels](#input\_labels)
 
 Description: A map of labels to apply to contained resources.

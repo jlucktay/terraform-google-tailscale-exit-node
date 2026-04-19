@@ -1,4 +1,6 @@
 locals {
+  firewall_ports = concat([22], var.vm_extra_iap_ports)
+
   network_tier = var.use_premium_network_tier ? "PREMIUM" : "STANDARD"
 
   labels = {

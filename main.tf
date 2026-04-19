@@ -91,7 +91,7 @@ resource "google_compute_instance" "main" {
   labels = merge(local.labels, var.labels)
 
   tags = [
-    "ssh"
+    "allow-from-iap"
   ]
 
   depends_on = [

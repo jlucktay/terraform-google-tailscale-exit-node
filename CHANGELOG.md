@@ -9,7 +9,9 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 ### Added
 
 - This backfilled CHANGELOG.
-- Input variable to override the default machine type for the exit node VM.
+- Input variables:
+  - Override the default machine type for the exit node VM.
+  - Add more ports (beyond the default `22`) to allow TCP traffic into the exit node VM from IAP.
 - `mise` and `pre-commit` configs:
   - Use the latest versions available of both `terraform` and `terraform-docs`.
   - Run `terraform-docs` and miscellaneous other checks on any git hooks `pre-commit` is installed to.
@@ -150,7 +152,7 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
     - [Compute].
     - [OS Config].
   - Network with one subnet.
-  - Firewall to allow SSH from Google Cloud's Identity-Aware Proxy.
+  - Firewall to allow SSH from Google Cloud's Identity-Aware Proxy (IAP).
   - Service account with Logs Writer role.
   - VM running Debian 11, run by the above SA.
   - Template of the startup script, attached to the above VM, to:

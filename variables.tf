@@ -60,3 +60,9 @@ variable "use_premium_network_tier" {
   default     = false
   sensitive   = false
 }
+
+variable "vm_extra_iap_ports" {
+  description = "Additional ports to allow traffic into the exit node VM on, coming from Google Cloud's Identity-Aware Proxy."
+  type        = list(number)
+  default     = []
+}
